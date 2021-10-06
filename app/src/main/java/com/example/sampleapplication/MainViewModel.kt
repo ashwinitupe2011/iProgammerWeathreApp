@@ -1,5 +1,6 @@
 package com.example.sampleapplication
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,6 +39,26 @@ class MainViewModel @Inject constructor(
             ?.subscribe ({
             },{
 
+            })?.let {
+                compositeDisposable.add(it)
+            }
+    }
+
+    fun getPersonData(){
+
+        dataBaseInstance?.personDataDao()?.getAllRecords()
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe ({
+                if(!it.isNullOrEmpty()){
+                    personsList.postValue(it)
+                }else{
+                    personsList.postValue(listOf())
+                }
+                it?.forEach {
+                    Log.d("AAAAAA", it.nameFUll.toString())
+                }
+            },{
             })?.let {
                 compositeDisposable.add(it)
             }
