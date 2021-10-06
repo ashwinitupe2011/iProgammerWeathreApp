@@ -12,11 +12,18 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var dataBaseInstance = PersonalDetailsDataBase.getDatabasenIstance(this)
+        viewModel?.setInstanceOfDb(dataBaseInstance)
+
         buttonClick.setOnClickListener { clickMethod() }
     }
 
     private fun clickMethod() = GlobalScope.launch(Dispatchers.Main)
     {
+
+        var person = PersonData(nameFUll = "name", ageTotal = 1)
+        viewModel?.saveDataIntoDb(person)
+
         val data = viewModel.getApiCall().await()
 
         Log.d("dxdata","data"+data)
