@@ -18,12 +18,8 @@ data class CityDetails (
     var timeSearched: Int? = null,
 )
 {
-    constructor(cityId: String, cityName: Double, cityTemperature: Int) : this(
-
-    )
-
     companion object{
-        const val TABLE_NAME="personal_details"
+        const val TABLE_NAME="city_details"
         const val ID = "id"
         const val CITY_NAME ="name"
         const val CITY_TEMP = "temperature"
