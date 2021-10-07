@@ -11,7 +11,7 @@ open class ServiceApiClass @Inject constructor(private val restApiInterface: Res
         val apiResponse = result?.execute()
         if(apiResponse!!.isSuccessful)
         {
-            return apiResponse.body()
+            return apiResponse.body() as WeatherResponse
         }
         else
         return null

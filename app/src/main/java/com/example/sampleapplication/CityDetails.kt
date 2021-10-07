@@ -13,11 +13,15 @@ data class CityDetails (
     @ColumnInfo(name = CITY_NAME)
     var cityName: String? = null,
     @ColumnInfo(name = CITY_TEMP)
-    var cityTemperature: String? = null,
+    var cityTemperature: Double? = null,
     @ColumnInfo(name = CITY_TIME)
-    var timeSearched: String? = null,
+    var timeSearched: Int? = null,
 )
 {
+    constructor(cityId: String, cityName: Double, cityTemperature: Int) : this(
+
+    )
+
     companion object{
         const val TABLE_NAME="personal_details"
         const val ID = "id"

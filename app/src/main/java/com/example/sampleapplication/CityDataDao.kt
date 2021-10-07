@@ -13,9 +13,9 @@ import io.reactivex.Maybe
 
 @Dao
 interface CityDataDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCityData(data:CityDetails) : Completable
 
-    @Query("SELECT name, temperature,time FROM ${CityDetails.TABLE_NAME}")
+    @Query("SELECT * FROM ${CityDetails.TABLE_NAME}")
     fun getAllCityRecords(): Maybe<List<CityDetails>>
 }

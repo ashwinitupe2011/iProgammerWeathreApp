@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    fun getCityData(){
+    fun getCityData(): ArrayList<CityDetailsDataclass>? {
 
         dataBaseInstance?.cityDataDao()?.getAllCityRecords()
             ?.subscribeOn(Schedulers.io())
@@ -53,14 +53,14 @@ class MainViewModel @Inject constructor(
                 }else{
                 }
                 it?.forEach {
-                    CityDetailsDataclass(it.cityName.toString(), it.cityTemperature.toString(),
+                    cityList?.add(CityDetailsDataclass(it.cityName.toString(), it.cityTemperature.toString(),
                         it.timeSearched.toString()
-                    )
+                    ))
                 }
             },{
             })?.let {
                 compositeDisposable.add(it)
             }
-
+        return cityList
     }
 }

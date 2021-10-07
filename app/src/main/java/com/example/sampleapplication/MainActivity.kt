@@ -10,16 +10,17 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ViewModelActivity<MainViewModel>() {
     var cityName = ""
-    var cityList : List<CityDetails>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val cityList = viewModel.getCityData()
+
         val dataBaseInstance = CityDetailsDataBase.getDatabasenIstance(this)
         viewModel.setInstanceOfDb(dataBaseInstance)
 
-        val movieObjects = arrayOf(CityDetailsDataclass("Avengers: Endgame", "2019","aa"), CityDetailsDataclass("Captain Marvel", "2019","ss"), CityDetailsDataclass("Shazam!", "2019","ddd"))
+        val movieObjects = arrayOf(cityList)
         val adapter = ArrayAdapter(this, android.R.layout.select_dialog_item, movieObjects)
 
         cityNameEdittext.threshold = 1 //start searching for values after typing first character
@@ -36,9 +37,7 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
 
         val weatherDetails = viewModel.getWeatherApiCall(cityName).await()
 
-       val temp =  weatherDetails.main.temp_min.plus(weatherDetails.main.temp_max)
-        val cityData = CityDetails(1,weatherDetails.name,temp.toString(),weatherDetails.timezone.toString())
-        viewModel.saveDataIntoDb(cityData)
+        viewModel.saveDataIntoDb(CityDetails(weatherDetails.name, weatherDetails.main.temp_min ,weatherDetails.timezone))
     }
 
 }
