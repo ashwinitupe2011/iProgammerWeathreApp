@@ -1,9 +1,7 @@
 package com.example.sampleapplication
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,12 +18,11 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
         val dataBaseInstance = CityDetailsDataBase.getDatabasenIstance(this)
         viewModel.setInstanceOfDb(dataBaseInstance)
 
-        val movies = arrayOf("Avengers: Endgame", "Captain Marvel", "Shazam!", "Spider-Man: Far From Home", "Dark Phoenix", "Hellboy", "Glass", "Reign of the Superman", "Brightburn")
-        val adapter1 = ArrayAdapter(this, android.R.layout.select_dialog_item, movies)
+        val movieObjects = arrayOf(CityDetailsDataclass("Avengers: Endgame", "2019","aa"), CityDetailsDataclass("Captain Marvel", "2019","ss"), CityDetailsDataclass("Shazam!", "2019","ddd"))
+        val adapter2 = ArrayAdapter(this, android.R.layout.select_dialog_item, movieObjects)
 
         cityNameEdittext.threshold = 1 //start searching for values after typing first character
-        cityNameEdittext.setAdapter(adapter1)
-
+        cityNameEdittext.setAdapter(adapter2)
 
  /*       observerViewModel()*/
 

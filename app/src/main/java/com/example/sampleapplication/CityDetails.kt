@@ -24,4 +24,8 @@ data class CityDetails (
         const val CITY_TEMP = "temperature"
         const val CITY_TIME = "time"
     }
+
+    override fun toString(): String {
+        return CITY_NAME.plus(" - ").plus(CITY_TEMP).plus("-").plus(CITY_TIME)
+    }
 }
