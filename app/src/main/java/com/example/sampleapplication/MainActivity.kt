@@ -37,6 +37,7 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
 
         val weatherDetails = viewModel.getWeatherApiCall(cityName).await()
 
+        textResponse.text = weatherDetails.toString()
         viewModel.saveDataIntoDb(CityDetails(weatherDetails.name, weatherDetails.main.temp_min ,weatherDetails.timezone))
     }
 

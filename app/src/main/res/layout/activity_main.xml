@@ -26,4 +26,13 @@
         app:layout_constraintTop_toBottomOf="@+id/cityNameEdittext"
         android:layout_marginTop="30dp"/>
 
+    <TextView
+        android:id="@+id/textResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoButtonClick">
+
+    </TextView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
