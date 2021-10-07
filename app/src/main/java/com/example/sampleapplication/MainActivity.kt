@@ -2,6 +2,7 @@ package com.example.sampleapplication
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,12 +20,10 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
         viewModel.setInstanceOfDb(dataBaseInstance)
 
         val movieObjects = arrayOf(CityDetailsDataclass("Avengers: Endgame", "2019","aa"), CityDetailsDataclass("Captain Marvel", "2019","ss"), CityDetailsDataclass("Shazam!", "2019","ddd"))
-        val adapter2 = ArrayAdapter(this, android.R.layout.select_dialog_item, movieObjects)
+        val adapter = ArrayAdapter(this, android.R.layout.select_dialog_item, movieObjects)
 
         cityNameEdittext.threshold = 1 //start searching for values after typing first character
-        cityNameEdittext.setAdapter(adapter2)
-
- /*       observerViewModel()*/
+        cityNameEdittext.setAdapter(adapter)
 
         infoButtonClick.setOnClickListener {
             cityName = cityNameEdittext.text.toString()
@@ -36,15 +35,10 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
     {
 
         val weatherDetails = viewModel.getWeatherApiCall(cityName).await()
+
+       val temp =  weatherDetails.main.temp_min.plus(weatherDetails.main.temp_max)
+        val cityData = CityDetails(1,weatherDetails.name,temp.toString(),weatherDetails.timezone.toString())
+        viewModel.saveDataIntoDb(cityData)
     }
 
-    /*private fun observerViewModel() {
-        viewModel?.cityList.observe(this, Observer {
-            if (!it.isNullOrEmpty()) {
-              *//* cityList = viewModel.getCityData()*//*
-            } else {
-
-            }
-        })
-    }*/
 }

@@ -1,7 +1,5 @@
 package com.example.sampleapplication
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,24 +14,24 @@ class MainViewModel @Inject constructor(
     val apiService : ServiceApiClass
 ) : ViewModel() {
 
+    var cityList : ArrayList<CityDetailsDataclass>? = null
     protected val compositeDisposable = CompositeDisposable()
 
     private var dataBaseInstance: CityDetailsDataBase ?= null
 
-    var cityList = MutableLiveData<List<CityDetails>>()
 
     fun setInstanceOfDb(dataBaseInstance: CityDetailsDataBase) {
         this.dataBaseInstance = dataBaseInstance
     }
 
-    fun getWeatherApiCall(cityName: String): Deferred<Any> = GlobalScope.async(Dispatchers.Default)  {
+    fun getWeatherApiCall(cityName: String): Deferred<WeatherResponse> = GlobalScope.async(Dispatchers.Default)  {
        val data = apiService.getweatherApiCall(cityName)
         return@async data!!
     }
 
     fun saveDataIntoDb(data: CityDetails){
 
-        dataBaseInstance?.cityDataDao()?.insertPersonData(data)
+        dataBaseInstance?.cityDataDao()?.insertCityData(data)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe ({
@@ -46,18 +44,23 @@ class MainViewModel @Inject constructor(
 
     fun getCityData(){
 
-        dataBaseInstance?.cityDataDao()?.getAllRecords()
+        dataBaseInstance?.cityDataDao()?.getAllCityRecords()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe ({
                 if(!it.isNullOrEmpty()){
-                    cityList.postValue(it)
+
                 }else{
-                    cityList.postValue(listOf())
+                }
+                it?.forEach {
+                    CityDetailsDataclass(it.cityName.toString(), it.cityTemperature.toString(),
+                        it.timeSearched.toString()
+                    )
                 }
             },{
             })?.let {
                 compositeDisposable.add(it)
             }
+
     }
 }

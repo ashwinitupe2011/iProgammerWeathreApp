@@ -1,5 +1,6 @@
 package com.example.sampleapplication
 
+import android.os.Build.ID
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
