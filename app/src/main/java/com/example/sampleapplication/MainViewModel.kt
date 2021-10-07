@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
 
     fun saveDataIntoDb(data: CityDetails){
 
-        dataBaseInstance?.personDataDao()?.insertPersonData(data)
+        dataBaseInstance?.cityDataDao()?.insertPersonData(data)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe ({
@@ -44,9 +44,9 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    fun getPersonData(){
+    fun getCityData(){
 
-        dataBaseInstance?.personDataDao()?.getAllRecords()
+        dataBaseInstance?.cityDataDao()?.getAllRecords()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe ({
@@ -54,9 +54,6 @@ class MainViewModel @Inject constructor(
                     cityList.postValue(it)
                 }else{
                     cityList.postValue(listOf())
-                }
-                it?.forEach {
-                    Log.d("AAAAAA", it.cityName.toString())
                 }
             },{
             })?.let {

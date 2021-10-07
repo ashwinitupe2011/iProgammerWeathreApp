@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [CityDetails::class], version = DB_VERSION)
 abstract class CityDetailsDataBase : RoomDatabase() {
-    abstract fun personDataDao(): CityDataDao
+    abstract fun cityDataDao(): CityDataDao
 
     companion object {
         @Volatile
