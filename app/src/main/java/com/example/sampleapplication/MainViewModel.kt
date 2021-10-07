@@ -26,9 +26,9 @@ class MainViewModel @Inject constructor(
         this.dataBaseInstance = dataBaseInstance
     }
 
-    fun getApiCall(): Deferred<Any> = GlobalScope.async(Dispatchers.Default)  {
-       val data = apiService.getApiCall()
-        return@async data
+    fun getWeatherApiCall(): Deferred<Any> = GlobalScope.async(Dispatchers.Default)  {
+       val data = apiService.getweatherApiCall()
+        return@async data!!
     }
 
     fun saveDataIntoDb(data: PersonData){

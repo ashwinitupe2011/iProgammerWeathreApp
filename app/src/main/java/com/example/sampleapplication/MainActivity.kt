@@ -13,28 +13,23 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var dataBaseInstance = PersonalDetailsDataBase.getDatabasenIstance(this)
-        viewModel?.setInstanceOfDb(dataBaseInstance)
+        val dataBaseInstance = PersonalDetailsDataBase.getDatabasenIstance(this)
+        viewModel.setInstanceOfDb(dataBaseInstance)
 
         observerViewModel()
 
-        buttonClick.setOnClickListener { clickMethod() }
+        infoButtonClick.setOnClickListener { getWheatherInfo() }
     }
 
-    private fun clickMethod() = GlobalScope.launch(Dispatchers.Main)
+    private fun getWheatherInfo() = GlobalScope.launch(Dispatchers.Main)
     {
 
-        var person = PersonData(nameFUll = "name", ageTotal = 1)
-        viewModel?.getPersonData()
-
-        val data = viewModel.getApiCall().await()
-
-        Log.d("dxdata","data"+data)
+        val weatherDetails = viewModel.getWeatherApiCall().await()
 
     }
 
     private fun observerViewModel() {
-        viewModel?.personsList?.observe(this, Observer {
+        viewModel?.personsList.observe(this, Observer {
             if (!it.isNullOrEmpty()) {
                 Log.d("AAAAAA",it.toString())
             } else {

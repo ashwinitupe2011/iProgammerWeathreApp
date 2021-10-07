@@ -28,7 +28,7 @@ import javax.inject.Singleton
 class AppModule {
 
     companion object {
-         var BASE_URL : String = "https://api.openweathermap.org/data/2.5/"
+         var BASE_URL : String = "https://api.openweathermap.org/"
     }
 
     @Provides

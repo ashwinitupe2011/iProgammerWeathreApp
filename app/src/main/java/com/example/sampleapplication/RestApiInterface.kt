@@ -9,13 +9,14 @@ import retrofit2.http.Query
 
 interface RestApiInterface {
 
-    @POST("/hjgjhg")
-    fun getData(
-        @Body aaa : String
-    ): Call<ResponseBody>
-
-    @GET("json")
-    fun requestCityAddressByName(
+ /*   @GET("json")
+    fun requestWeatherByCityName(
         @Query("address") address: String
-    ): Call<ResponseBody>
+    ): Call<ResponseBody>  */
+
+    @GET("data/2.5/weather?")
+    fun requestWeatherByCityName(
+        @Query("q") lon: String?,
+        @Query("appid") app_id: String?
+    ): Call<WeatherResponse?>?
 }
