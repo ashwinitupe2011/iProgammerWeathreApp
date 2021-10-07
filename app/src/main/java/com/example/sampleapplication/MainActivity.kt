@@ -19,9 +19,9 @@ class MainActivity : ViewModelActivity<MainViewModel>() {
         val dataBaseInstance = CityDetailsDataBase.getDatabasenIstance(this)
         viewModel.setInstanceOfDb(dataBaseInstance)
 
-        val movieObjects = arrayOf(CityDetailsDataclass("pune","299","18900")
+        val cityObjects = arrayOf(CityDetailsDataclass("pune","299","18900")
         )
-        val adapter = ArrayAdapter(this, android.R.layout.select_dialog_item, movieObjects)
+        val adapter = ArrayAdapter(this, android.R.layout.select_dialog_item, cityObjects)
 
         cityNameEdittext.threshold = 1 //start searching for values after typing first character
         cityNameEdittext.setAdapter(adapter)
