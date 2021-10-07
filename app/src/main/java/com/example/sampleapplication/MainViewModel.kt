@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
 
     private var dataBaseInstance: CityDetailsDataBase ?= null
 
-    var cityList = MutableLiveData<List<cityDetails>>()
+    var cityList = MutableLiveData<List<CityDetails>>()
 
     fun setInstanceOfDb(dataBaseInstance: CityDetailsDataBase) {
         this.dataBaseInstance = dataBaseInstance
@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
         return@async data!!
     }
 
-    fun saveDataIntoDb(data: cityDetails){
+    fun saveDataIntoDb(data: CityDetails){
 
         dataBaseInstance?.personDataDao()?.insertPersonData(data)
             ?.subscribeOn(Schedulers.io())
