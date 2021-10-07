@@ -9,27 +9,30 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ViewModelActivity<MainViewModel>() {
+    var cityName = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val dataBaseInstance = PersonalDetailsDataBase.getDatabasenIstance(this)
+        val dataBaseInstance = CityDetailsDataBase.getDatabasenIstance(this)
         viewModel.setInstanceOfDb(dataBaseInstance)
 
         observerViewModel()
 
-        infoButtonClick.setOnClickListener { getWheatherInfo() }
+        infoButtonClick.setOnClickListener {
+            cityName = cityNameEdittext.text.toString()
+            getWheatherInfo()
+        }
     }
 
     private fun getWheatherInfo() = GlobalScope.launch(Dispatchers.Main)
     {
 
-        val weatherDetails = viewModel.getWeatherApiCall().await()
-
+        val weatherDetails = viewModel.getWeatherApiCall(cityName).await()
     }
 
     private fun observerViewModel() {
-        viewModel?.personsList.observe(this, Observer {
+        viewModel?.cityList.observe(this, Observer {
             if (!it.isNullOrEmpty()) {
                 Log.d("AAAAAA",it.toString())
             } else {

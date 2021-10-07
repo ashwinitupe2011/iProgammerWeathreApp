@@ -8,10 +8,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
-interface PersonalDataDao {
+interface CityDataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPersonData(data:PersonData) : Completable
+    fun insertPersonData(data:cityDetails) : Completable
 
-    @Query("SELECT * FROM ${PersonData.TABLE_NAME}")
-    fun getAllRecords():Single<List<PersonData>>
+    @Query("SELECT * FROM ${cityDetails.TABLE_NAME}")
+    fun getAllRecords():Single<List<cityDetails>>
 }

@@ -18,20 +18,20 @@ class MainViewModel @Inject constructor(
 
     protected val compositeDisposable = CompositeDisposable()
 
-    private var dataBaseInstance: PersonalDetailsDataBase ?= null
+    private var dataBaseInstance: CityDetailsDataBase ?= null
 
-    var personsList = MutableLiveData<List<PersonData>>()
+    var cityList = MutableLiveData<List<cityDetails>>()
 
-    fun setInstanceOfDb(dataBaseInstance: PersonalDetailsDataBase) {
+    fun setInstanceOfDb(dataBaseInstance: CityDetailsDataBase) {
         this.dataBaseInstance = dataBaseInstance
     }
 
-    fun getWeatherApiCall(): Deferred<Any> = GlobalScope.async(Dispatchers.Default)  {
-       val data = apiService.getweatherApiCall()
+    fun getWeatherApiCall(cityName: String): Deferred<Any> = GlobalScope.async(Dispatchers.Default)  {
+       val data = apiService.getweatherApiCall(cityName)
         return@async data!!
     }
 
-    fun saveDataIntoDb(data: PersonData){
+    fun saveDataIntoDb(data: cityDetails){
 
         dataBaseInstance?.personDataDao()?.insertPersonData(data)
             ?.subscribeOn(Schedulers.io())
@@ -51,12 +51,12 @@ class MainViewModel @Inject constructor(
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe ({
                 if(!it.isNullOrEmpty()){
-                    personsList.postValue(it)
+                    cityList.postValue(it)
                 }else{
-                    personsList.postValue(listOf())
+                    cityList.postValue(listOf())
                 }
                 it?.forEach {
-                    Log.d("AAAAAA", it.nameFUll.toString())
+                    Log.d("AAAAAA", it.cityName.toString())
                 }
             },{
             })?.let {

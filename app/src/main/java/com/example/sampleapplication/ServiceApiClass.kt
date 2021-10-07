@@ -5,13 +5,13 @@ import javax.inject.Singleton
 
 @Singleton
 open class ServiceApiClass @Inject constructor(private val restApiInterface: RestApiInterface) {
-    fun getweatherApiCall(): WeatherResponse? {
+    fun getweatherApiCall(cityName: String): WeatherResponse? {
 
-        val result = restApiInterface.requestWeatherByCityName("pune","094aa776d64c50d5b9e9043edd4ffd00")
-        val result1 = result?.execute()
-        if(result1!!.isSuccessful)
+        val result = restApiInterface.requestWeatherByCityName(cityName,"094aa776d64c50d5b9e9043edd4ffd00")
+        val apiResponse = result?.execute()
+        if(apiResponse!!.isSuccessful)
         {
-            return result1.body()
+            return apiResponse.body()
         }
         else
         return null

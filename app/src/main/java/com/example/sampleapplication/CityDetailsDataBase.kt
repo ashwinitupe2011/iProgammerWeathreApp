@@ -5,15 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [PersonData::class], version = DB_VERSION)
-abstract class PersonalDetailsDataBase : RoomDatabase() {
-    abstract fun personDataDao(): PersonalDataDao
+@Database(entities = [cityDetails::class], version = DB_VERSION)
+abstract class CityDetailsDataBase : RoomDatabase() {
+    abstract fun personDataDao(): CityDataDao
 
     companion object {
         @Volatile
-        private var databseInstance: PersonalDetailsDataBase? = null
+        private var databseInstance: CityDetailsDataBase? = null
 
-        fun getDatabasenIstance(mContext: Context): PersonalDetailsDataBase =
+        fun getDatabasenIstance(mContext: Context): CityDetailsDataBase =
             databseInstance ?: synchronized(this) {
                 databseInstance ?: buildDatabaseInstance(mContext).also {
                     databseInstance = it
@@ -21,7 +21,7 @@ abstract class PersonalDetailsDataBase : RoomDatabase() {
             }
 
         private fun buildDatabaseInstance(mContext: Context) =
-            Room.databaseBuilder(mContext, PersonalDetailsDataBase::class.java, DB_NAME)
+            Room.databaseBuilder(mContext, CityDetailsDataBase::class.java, DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
 
